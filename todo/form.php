@@ -7,13 +7,13 @@ include "database.php";
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo list</title>
+    <title>Todo Form</title>
 </head>
 <body>
 
 <form action="<?php $_SERVER['PHP_SELF']; ?>" method="post">
-       Task: <input type="text" name="submit" >
-      <input type="submit" value="submit" link="insert.php">
+       <input type="text" placeholder="Enter something task...." name="submit" >
+      <button type="submit" value="submit">Submit</button>
      
 </form>
 <?php 
@@ -25,7 +25,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
        
     }else{
        mysqli_query($con,"INSERT INTO Todo(task) values('$task')");
-       
+       header("location:insert.php");
     }
 }
 ?>

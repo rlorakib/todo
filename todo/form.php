@@ -12,6 +12,7 @@ include "database.php";
 <body>
 
 <form action="<?php $_SERVER['PHP_SELF']; ?>" method="post">
+<button><a href="http://localhost/todo//todo/insert.php?">See list</a></button><br>
        <input type="text" placeholder="Enter something task...." name="submit" >
       <button type="submit" value="submit">Submit</button>
      

@@ -5,36 +5,29 @@ include "database.php";
 <?php
  
 $id = $_GET['update'];
- echo "Your old data -id:".$id;   
-
-$sql = "SELECT task FROM Todo WHERE id=$id ";
+  
+$sql = "SELECT * FROM Todo WHERE id=$id ";
 $result = mysqli_query($con,$sql);
+$da = mysqli_fetch_array($result);
 
-if(mysqli_num_rows($result)> 0){
-    while($row =mysqli_fetch_assoc($result)){
-       echo " task:".$row['task'];
 
-    }
-}
-if(isset($_REQUEST['submit'])){
-    $new= $_REQUEST["submit"];
-    echo $new;
+if(!empty($_POST['submit'])){
+    $new= $_POST["submit"];
     
 }else{
     echo null;
 }
+
+
 if(isset($new)){
-    if(empty($new)){
-        echo '<p style="color:red">Sorry please enter new text here</p>';
+    if(!empty($new)){
+        $task = "UPDATE Todo SET task='$new' WHERE id=$id ";
+        mysqli_query($con, $task);
+        header("location:form.php");
+    }else{
+        echo "Sorry, Please enter new text!";
     }
 }
-
-if(!empty($new)){
-    $task = "UPDATE Todo SET task='$new' WHERE id=$id ";
-    mysqli_query($con, $task);
-    header("location:insert.php");
-}
-
 
 ?> 
 
@@ -44,11 +37,11 @@ if(!empty($new)){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update</title>
+    <title>Update data</title>
 </head>
 <body>
     <form action="" method="post">
-        <input type="text" name="submit" placeholder="Enter new text here....">
+        <input type="text" name="submit" value="<?php echo $da['task'];?>">
         <input type="submit" value="submit">
     </form>
  

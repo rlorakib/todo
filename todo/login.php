@@ -1,22 +1,33 @@
 <?php
 include "database.php";
-
+session_start();
 $emailer='';
 
-if($_SERVER['REQUEST_METHOD']=="POST"){
-    if(empty($_POST['email']) || ($_POST['password'])){
+if(isset($_POST['submit'])){
+     if(empty($_POST['email']) && ($_POST['password'])){
         $emailer="Sorry, required fields!";
-    }else{
-        $email = $_POST['email'];
-        $pass = $_POST['password'];
-        if(filter_var($email, FILTER_VALIDATE_EMAIL) && (preg_match("/^[a-zA-Z-' 0-9]*$/",$pass))){
-            $in = "INSERT INTO login(Password,Email) values('$pass','$email')";
-            mysqli_query($con, $in);
-            header("location:form.php");
-
+     }else{
+        $useremail = $_POST['email'];
+        $userpass = $_POST['password'];
+        $select = "SELECT * FROM login WHERE Email='$useremail' AND Password='$userpass'";
+        $result = mysqli_query($con, $select);
+        $count = mysqli_num_rows($result);
+        if($count>0){
+            $a = mysqli_fetch_assoc($result);
+            $_SESSION['role'] = $a['Rol'];
+            if($_SESSION['role'] == 1){
+                header("location:form.php");
+            }
+            if($_SESSION['role'] == 0){
+                header("location:form.php");
+            }
+            
         }else{
-            $emailer="Sorry, please try again.";
+            $emailer = "Sorry,Please try again!";
         }
+
+   
+       
     }
 }
 
@@ -41,7 +52,8 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
 </style>
 
 <body>
-<p style="text-align:right">Not a member? <a href="signup.php?signup=<?php echo 'signup'?>"><button>Sign up now</button></a></ps>    
+
+<p style="text-align:right">Not a member? <a href="signup.php?"><button style="color:red">Sign up</button></a></p>    
 <br><br><br><br>
 
     <div class="center"><h2 style="text-align:center;color:blue">Login</h2>
@@ -52,11 +64,11 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
         </border>
         <label for="pass"><b>Password:</b></label><br>
         <input type="text" name="password" id="pass" placeholder="Enter password"><br>
-        
-        <input type="submit" value="Login">
+        <input type="submit" value="Login" name="submit">
+        <span style="color:red"><?php echo $emailer;?></span>
     </form>
    </div>
-<h4 style="color:red"><?php echo $emailer; ?></h4>
+
 
 </body>
 </html>

@@ -1,7 +1,7 @@
 <?php 
 include "database.php";
 session_start();
-if(!isset($_SESSION['role'])){
+if(isset($_SESSION['role'] != 0)){
     header("location:login.php");
 }
 ?>
@@ -34,11 +34,6 @@ if(!isset($_SESSION['role'])){
       <button type="submit" value="submit">Submit</button><br><br>
   
 </form>
- <?php if($_SESSION['role']==1){ ?>
-
-    <a href="delete.php?delete_all=<?php echo 1;?>"><button style="color:red">Delete all</button></a>  
- <?php } ?>
-
 <br><br>
 
 <?php 
@@ -60,7 +55,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
     <tr>
         <th>Id</th>
         <th>Task</th>
-        <th colspan="2">Action</th>
+        <th colspan="1">Action</th>
     </tr>
     
 <?php
@@ -74,9 +69,6 @@ if(mysqli_num_rows($td)> 0){
         <td><?php echo $row['id']; ?></td>
         <td><?php echo $row['task'];?></td>
         <td><a class="btn btn-info" href="update.php?update=<?php echo $row['id'];?>"><button style="color:blue">Update</button></a></td>
-        <?php if($_SESSION['role']==1){?>
-        <td><a class="btn btn-danger" href="delete.php?delete=<?php echo $row['id'];?>"><button style="color:red">Delete</button></a></td>
-        <?php } ?>
         </tr> 
        <?php }
     }else{

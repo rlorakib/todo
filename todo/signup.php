@@ -15,7 +15,7 @@ if(isset($_POST['submit'])){
             $err = "Required phone number";
         }else{
            $pnumber=input($_POST['pnumber']); 
-           if(filter_var($pnumber,FILTER_VALIDATE_INT)<12){
+           if(filter_var($pnumber,FILTER_VALIDATE_INT)<=11){
             $phonenumber=$pnumber;
             if(empty($_POST['email'])){
                 $err = "Required Email";
@@ -27,15 +27,15 @@ if(isset($_POST['submit'])){
                       $err = "Required password";
                    }else{
                       $pass=input($_POST['password']); 
-                      if(isset($pass)==6){
-                        $password=$pass;
-                        $data = "INSERT INTO login(Username,Phone,Email,Password,Rol) values('$uname','$pnumber','$email','$pass',0)";
-                        mysqli_query($con,$data);
-                        echo "Please login!";
-                        header("location:login.php");
-                   }else{
-                     $err = "Invalid password";
-                   }
+                      if($pass==true){
+                         $password=$pass;
+                         $data = "INSERT INTO login(Username,Phone,Email,Password,Rol) values('$uname','$pnumber','$email','$pass',0)";
+                         mysqli_query($con,$data);
+                         echo "Please login!";
+                         header("location:login.php");
+                       }else{
+                          $err = "Invalid password";
+                        }
                 }
               }else{
                  $err="Invalid email";
@@ -82,20 +82,23 @@ function input($data){
   border: 3px solid #73AD21;
   padding: 10px;
     }
+    body{
+    background-color: #66ffe0;
+} 
 </style>
 <body>
     <h1 style="text-align:center;color:blue">Sign up</h1>
     <div class="signup">
     <form action="" method="post">
         <label for="uname"><b>Username:</b></label><br>
-        <input type="text" title="Username first character(A-Z)" placeholder="username" name="uname">
+        <input type="text" title="Username first character(A-Z)" placeholder="username" name="uname" maxlength="50">
         <label for="pnumber"><b>Phone number:</b></label><br>
-        <input type="text" title="set number 11 digit." placeholder="Phone number" name="pnumber">
+        <input type="text" maxlength="11" title="set number 11 digit." placeholder="Phone number" name="pnumber">
         <label for="email"><b>Email:</b></label><br>
         <input type="text" title="Email field" name="email" placeholder="Enter email"><br>
         
         <label for="password"><b>Password:</b></label><br>
-        <input type="text" title="set password 6 character" name="password" placeholder="Enter password"><br>
+        <input type="text" title="password must be 6 digit int" name="password" placeholder="Enter password" maxlength="6"><br>
         
         <input type="submit" value="signup" name="submit">
         <span style="color:red"><?php echo $err;?></span>

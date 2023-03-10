@@ -24,6 +24,9 @@ if(!isset($_SESSION['role'])){
     th{
         background-color: #96D4D4;
     }
+    body{
+    background-color: #66ffe0;
+} 
 
 </style>
 <body>

@@ -43,6 +43,11 @@ if(isset($new)){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update data</title>
 </head>
+<style>
+    body{
+    background-color: #66ffe0;
+} 
+</style>
 <body>
     <form action="" method="post">
         <input type="text" name="submit" value="<?php echo $da['task'];?>">

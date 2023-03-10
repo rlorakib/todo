@@ -4,27 +4,33 @@ session_start();
 $emailer='';
 
 if(isset($_POST['submit'])){
-     if(empty($_POST['email']) && ($_POST['password'])){
-        $emailer="Sorry, required fields!";
+     if(empty($_POST['email'])){
+        $emailer="required email!";
      }else{
-        $useremail = $_POST['email'];
-        $userpass = $_POST['password'];
-        $select = "SELECT * FROM login WHERE Email='$useremail' AND Password='$userpass'";
-        $result = mysqli_query($con, $select);
-        $count = mysqli_num_rows($result);
-        if($count>0){
-            $a = mysqli_fetch_assoc($result);
-            $_SESSION['role'] = $a['Rol'];
-            if($_SESSION['role'] == 1){
-                header("location:form.php");
-            }
-            if($_SESSION['role'] == 0){
-                header("location:form.php");
-            }
-            
+        if(empty($_POST['password'])){
+            $emailer = "required password!";
         }else{
-            $emailer = "Sorry,Please try again!";
+            $useremail = $_POST['email'];
+            $userpass = $_POST['password'];
+            $select = "SELECT * FROM login WHERE Email='$useremail' AND Password='$userpass'";
+            $result = mysqli_query($con, $select);
+            $count = mysqli_num_rows($result);
+            if($count>0){
+               $a = mysqli_fetch_assoc($result);
+               $_SESSION['role'] = $a['Rol'];
+               if($_SESSION['role'] == 1){
+                  header("location:form.php");
+                }
+               if($_SESSION['role'] == 0){
+                   header("location:form.php");
+                }
+            
+            }else{
+               $emailer = "Sorry,Don't match!";
+             }
+           
         }
+        
 
    
        
@@ -48,7 +54,10 @@ if(isset($_POST['submit'])){
   width: 15%;
   border: 3px solid #73AD21;
   padding: 10px;
-}   
+}  
+body{
+    background-color: #66ffe0;
+} 
 </style>
 
 <body>

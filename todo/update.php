@@ -10,7 +10,7 @@ if(!isset($_SESSION['role'])){
  
 $id = $_GET['update'];
   
-$sql = "SELECT * FROM Todo WHERE id=$id ";
+$sql = "SELECT * FROM love WHERE id=$id ";
 $result = mysqli_query($con,$sql);
 $da = mysqli_fetch_array($result);
 
@@ -25,7 +25,7 @@ if(!empty($_POST['submit'])){
 
 if(isset($new)){
     if(!empty($new)){
-        $task = "UPDATE Todo SET task='$new' WHERE id=$id ";
+        $task = "UPDATE love SET task='$new' WHERE id=$id ";
         mysqli_query($con, $task);
         header("location:form.php");
     }else{
@@ -50,7 +50,7 @@ if(isset($new)){
 </style>
 <body>
     <form action="" method="post">
-        <input type="text" name="submit" value="<?php echo $da['task'];?>">
+        <input type="text" name="submit" value="<?php echo $da['Task'];?>">
         <input type="submit" value="submit">
     </form>
  

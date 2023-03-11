@@ -1,6 +1,7 @@
 <?php
 include "database.php";
 
+
 $err='';
 
 if(isset($_POST['submit'])){   
@@ -26,12 +27,13 @@ if(isset($_POST['submit'])){
                    if(empty($_POST['password'])){
                       $err = "Required password";
                    }else{
-                      $pass=input($_POST['password']); 
-                      if($pass==true){
+                      $pass=input($_POST['password']);
+                      $str = strlen("$pass"); 
+                      if($str==6){
                          $password=$pass;
                          $data = "INSERT INTO login(Username,Phone,Email,Password,Rol) values('$uname','$pnumber','$email','$pass',0)";
                          mysqli_query($con,$data);
-                         echo "Please login!";
+                         
                          header("location:login.php");
                        }else{
                           $err = "Invalid password";

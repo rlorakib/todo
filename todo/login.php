@@ -17,7 +17,9 @@ if(isset($_POST['submit'])){
             $count = mysqli_num_rows($result);
             if($count>0){
                $a = mysqli_fetch_assoc($result);
+               $_SESSION['uname'] = $a['Username'];
                $_SESSION['role'] = $a['Rol'];
+               $_SESSION['id'] = $a['Id'];
                if($_SESSION['role'] == 1){
                   header("location:form.php");
                 }

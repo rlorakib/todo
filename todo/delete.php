@@ -6,7 +6,7 @@ include "database.php";
 
 if(isset($_GET['delete']) && !empty($_GET['delete'])){
      $id = $_GET['delete'];
-     $del = "DELETE FROM Todo WHERE id=$id ";
+     $del = "DELETE FROM love WHERE id=$id ";
      mysqli_query($con, $del);
      header("location:form.php");
 }
@@ -16,7 +16,7 @@ if(isset($_GET['delete']) && !empty($_GET['delete'])){
 
 if($_GET['delete_all']==1){
      if(isset($_GET['delete_all'])){
-          $db = "DELETE FROM Todo";
+          $db = "DELETE FROM love";
           mysqli_query($con, $db);
           header("location:form.php");
      }else{

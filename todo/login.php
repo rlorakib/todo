@@ -3,6 +3,34 @@ include "database.php";
 session_start();
 $emailer='';
 
+
+class login{
+    public function login($con,$useremail,$userpass){
+        $this->con = $con;
+        
+        $select = "SELECT * FROM login WHERE Email='$useremail' AND Password='$userpass'";
+        $query = mysqli_query($this->con,$select);
+        $count = mysqli_num_rows($query);
+        if($count>0){
+            $a = mysqli_fetch_assoc($query);
+            $_SESSION['uname'] = $a['Username'];
+            $_SESSION['role'] = $a['Rol'];
+            $_SESSION['id'] = $a['Id'];
+            header("location:form.php");
+        }else{
+            $emailer = "Sorry, Don't match";
+        }
+
+    }
+}
+$login = new login();
+if(isset($_POST['submit'])){
+    if(!empty($_POST['email'] && $_POST['password'])){
+      $login->login($con,$_POST['email'],$_POST['password']);
+}else{
+    $emailer= "Required fields";
+}}
+/*
 if(isset($_POST['submit'])){
      if(empty($_POST['email'])){
         $emailer="required email!";
@@ -38,7 +66,7 @@ if(isset($_POST['submit'])){
        
     }
 }
-
+*/
 ?>
 
 

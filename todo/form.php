@@ -32,16 +32,20 @@ if(!isset($_SESSION['role'])){
 
 </style>
 <body>
+
 <p style="text-align:right"><a href="logout.php?"><button style="color:red">Logout</button></a></p>
+
 <h1 style="text-align:center;color:#ff4d94">Welcome to <?php echo $_SESSION['uname'];?> Form</h1>
+
 <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
 <label for="submit">Task:</label><br>
        <input type="text" placeholder="Enter some task...." name="submit" >
       <button type="submit" value="submit">Submit</button><br><br>
   
 </form>
- <?php if($_SESSION['role']==1){ ?>
 
+
+ <?php if($_SESSION['role']==1){ ?>
     <a href="delete.php?delete_all=<?php echo 1;?>"><button style="color:red">Delete all</button></a>  
  <?php } ?>
 

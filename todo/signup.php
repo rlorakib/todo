@@ -1,9 +1,65 @@
 <?php
 include "database.php";
+$err = '';
 
 
-$err='';
+class signup{
+public $con;
+public $uname;
+public $pnumber;
+public $email;
+public $pass;
 
+public function signup($con,$uname,$pnumber,$email,$pass){
+    $this->con = $con;
+    $this->uname= $uname;
+    $this->pnumber = $pnumber;
+    $this->email = $email;
+    $this->pass = $pass;
+        
+
+}
+public function data(){
+    $data = "INSERT INTO login(Username,Phone,Email,Password,Rol) values('$this->uname','$this->pnumber','$this->email','$this->pass',0)";
+    mysqli_query($this->con,$data);
+    header("location:login.php");
+}
+/*
+    public function data_recieve($uname,$pnumber,$email,$pass){
+        
+      if(!empty($_POST['submit'])){
+        $data = "INSERT INTO login(Username,Phone,Email,Password,Rol) values('$uname','$pnumber','$email','$pass',0)";
+
+        mysqli_query($this->con, $data);
+        
+      }else{
+        $err = "Sorry required fields";
+      }
+        
+
+       
+    }*/ 
+}
+
+
+
+
+$signup = new signup();
+if(isset($_POST['submit'])){
+    if(!empty($_POST['uname'] && $_POST['pnumber'] && $_POST['email'] && $_POST['password'])){
+      $signup->signup($con,$_POST['uname'],$_POST['pnumber'],$_POST['email'],$_POST['password']);
+      $signup->data();  
+    }else{
+    $err = "Required fields";
+}
+
+    
+}
+
+
+
+
+/*
 if(isset($_POST['submit'])){   
   
     if(empty($_POST['uname'])){
@@ -54,17 +110,13 @@ if(isset($_POST['submit'])){
    
 }
 
-    
-   
-
-
 function input($data){
     $data = trim($data);
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
     return $data;
 }
-
+*/
 
 ?>
 
